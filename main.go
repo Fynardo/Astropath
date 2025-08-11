@@ -8,9 +8,6 @@ import (
 )
 
 
-// TODO: Create ASTROPATH.md file if not exists (maybe ask to the user before)
-
-
 func main() {
 	if len(os.Args) < 2 {
 		showHelp()
