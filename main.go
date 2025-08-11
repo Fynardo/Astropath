@@ -7,6 +7,10 @@ import (
 	"github.com/fynardo/astropath/cmd"
 )
 
+
+// TODO: Create ASTROPATH.md file if not exists (maybe ask to the user before)
+
+
 func main() {
 	if len(os.Args) < 2 {
 		showHelp()
@@ -22,6 +26,8 @@ func main() {
 		handleEcho(os.Args[2:])
 	case "explore":
 		handleClaudeExplore()
+	case "review":
+		handleClaudeReview(os.Args[2:])
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command: %s\n", command)
 		fmt.Fprintf(os.Stderr, "Run 'astropath help' for usage information.\n")
@@ -39,6 +45,7 @@ func showHelp() {
 	fmt.Println("    help     Show this help message")
 	fmt.Println("    echo     Echo the provided arguments")
 	fmt.Println("    explore  Launch a Claude agent that will explore the current dir to find what the project is about and provide basic details.")
+	fmt.Println("    review   Launch a Claude agent that will review a branch.")
 	fmt.Println()
 	fmt.Println("Use 'astropath <COMMAND> --help' for more information about a specific command.")
 }
@@ -60,4 +67,12 @@ func handleEcho(args []string) {
 
 func handleClaudeExplore() {
 	cmd.ClaudeExplore()
+}
+
+func handleClaudeReview(args []string) {
+	if len(args) == 0 {
+		cmd.ClaudeReview("main") // Default to main branch if no branch is specified
+	}
+
+	cmd.ClaudeReview(args[0])
 }

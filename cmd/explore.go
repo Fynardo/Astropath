@@ -10,7 +10,8 @@ import (
 
 func ClaudeExplore() {
 	fmt.Println("Launching Claude explorer agent...")
-	done := claude.RunAgent(claude.ExplorerPrompt, claude.PromptParams{})
+	prompt := claude.GetPrompt(claude.ExplorerPrompt)
+	done := claude.RunAgent(prompt)
 	
 	// Give the goroutine a moment to start before returning
 	time.Sleep(100 * time.Millisecond)
