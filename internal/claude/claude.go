@@ -27,9 +27,9 @@ const explorerPrompt = basePrompt + "\n" + `Your next task is to explore a proje
 `
 
 const reviewerPrompt = basePrompt + "\n" + `For your next task you are going to be a code reviewer AI assistant.
-	1. Please checkout to the branch: {{ .BranchName }}.
-	2. Get a diff of the latest commit: 'git show'
-	3. Review the code and provide feedback.
+	You are going to review the udpates to the code in a branch, probably part of a pull request, so you will:
+	1. Get a diff of the branch compared to main: 'git diff main {{ .BranchName }}'
+	3. Review the code update and provide feedback.
 
 	Don't forget to add your findings to the ./ASTROPATH.md file.
 `
