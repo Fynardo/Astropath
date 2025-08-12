@@ -12,11 +12,24 @@ CLI to orchestrate the execution of local AI agents
 
 # To-Do list
 
-- Automatically create ASTROPATH.md file if not exists (maybe ask to the user before doing it). This way, Claude only needs edit access.
-- Check if .claude directory exists in the project
+- Implement an 'astropath init' command that:
+  - Automatically creates ASTROPATH.md file if not exists
+  - Creates .claude directory if it doesn't exists
+  - Populates the .claude/settings.json with 'Edit' and 'Git' perms
+
+- Improve templates management
+  - Move them to files for easier management and such
+  - More 'dynamic' content in templates, like branches naming
+
+- Improve the prompts so Claude:
+  - Thinks less in useless stuff
+  - Writes less words but more important ones
+  - More clear directions of how to do things
+
+- Add some sort of logging to tokens usage
 
 
 # Created By
 
 - Fynardo
-- Claude
+- Claude itself
