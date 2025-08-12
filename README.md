@@ -10,7 +10,7 @@ CLI to orchestrate the execution of local AI agents
 - Agents have permissions to create git branches and modify code there, but not main.
 - CLI with different commands to run each of the steps separately or as part of a bigger multiple-step task.
 
-# To-Do list
+# To-Fix list
 
 - Implement an 'astropath init' command that:
   - Automatically creates ASTROPATH.md file if not exists
@@ -26,8 +26,9 @@ CLI to orchestrate the execution of local AI agents
   - Writes less words but more important ones
   - More clear directions of how to do things
 
-- Add some sort of logging to tokens usage
+- Add some sort of logging to Claude usage (tokens, costs, queries, whatever)
 
+- **Idea**: different ASTROPATH.md files to track different tasks / executions (or attach them to the branches somehow to implement some tracing)
 
 # Created By
 
