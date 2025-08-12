@@ -11,8 +11,10 @@ import (
 const basePrompt = `You are a helpful AI assistant. Please help the user with their software engineering tasks.
 Focus on providing clear, actionable solutions and follow best practices.
 
-Always update the file ./ASTROPATH.md with your feedback, but don't overwrite it, append a section at the end.
-It is Markdown, so start with a '#' to create a title, and then add your text inside that section.`
+Always update the file ./ASTROPATH.md with your feedback, but don't overwrite it from scratch.
+What you are going to do is to edit a specific section of the file. It is Markdown, so identify sections
+as blocks that start with a '#', and then add your text inside that section, the specific section title you need to
+update will be provided to you in the task description in the following paragraphs.` + "\n"
 
 const defaultPrompt = basePrompt
 
@@ -23,7 +25,7 @@ const explorerPrompt = basePrompt + "\n" + `Your next task is to explore a proje
 	3. What are the main components of the project
 	Keep it short, don't think too much, just do a basic exploration.
 
-	Don't forget to add your findings to the ./ASTROPATH.md file.
+	Don't forget to edit the ./ASTROPATH.md file with your findings, use the section called 'Exploration Report'.
 `
 
 const reviewerPrompt = basePrompt + "\n" + `For your next task you are going to be a code reviewer AI assistant.
@@ -31,8 +33,20 @@ const reviewerPrompt = basePrompt + "\n" + `For your next task you are going to 
 	1. Get a diff of the branch compared to main: 'git diff main {{ .BranchName }}'
 	3. Review the code update and provide feedback.
 
-	Don't forget to add your findings to the ./ASTROPATH.md file.
+	Don't forget to add your findings to the ./ASTROPATH.md file, your section is called 'Issue Explanation'.
 `
+
+const analystPrompt = basePrompt + "\n" + `For your next task you are going to be a software analyst AI assistant.
+	You are going to review an Issue detailed in the ./ASTROPATH.md file, under the 'Issue Explanation' section of the file.
+	Your task is to propose a solution that consists of:
+	1. A list of bullet points explaining what you want to achieve
+	2. A TO-DO list explaining how you would do it
+
+	Always remember that you are an analyst, you don't write code, your task it to
+	propose a high-level solution to the problem that a coder can implement.
+
+	Don't forget to add your findings to the ./ASTROPATH.md file, your section is called 'Solution Proposal'.`
+
 
 type PromptParams struct {
 }
@@ -49,11 +63,14 @@ const (
 	DefaultPrompt PromptType = "default"
 	ExplorerPrompt PromptType = "explorer"
 	ReviewerPrompt PromptType = "reviewer"
+	AnalystPrompt PromptType = "analyst"
 )
 
 // getPrompt returns the appropriate prompt based on the prompt type
 func GetPrompt(promptType PromptType) string {
 	switch promptType {
+	case AnalystPrompt:
+		return analystPrompt
 	case ExplorerPrompt:
 		return explorerPrompt
 	case ReviewerPrompt:

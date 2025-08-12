@@ -21,6 +21,8 @@ func main() {
 		showHelp()
 	case "echo":
 		handleEcho(os.Args[2:])
+	case "analyze":
+		handleClaudeAnalyze()
 	case "explore":
 		handleClaudeExplore()
 	case "review":
@@ -41,6 +43,7 @@ func showHelp() {
 	fmt.Println("COMMANDS:")
 	fmt.Println("    help     Show this help message")
 	fmt.Println("    echo     Echo the provided arguments")
+	fmt.Println("    analyze  Launch a Claude agent that will analyze an issue and propse a solution.")
 	fmt.Println("    explore  Launch a Claude agent that will explore the current dir to find what the project is about and provide basic details.")
 	fmt.Println("    review   Launch a Claude agent that will review a branch.")
 	fmt.Println()
@@ -60,6 +63,10 @@ func handleEcho(args []string) {
 		fmt.Print(arg)
 	}
 	fmt.Println()
+}
+
+func handleClaudeAnalyze() {
+	cmd.ClaudeAnalyze()
 }
 
 func handleClaudeExplore() {
