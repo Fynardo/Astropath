@@ -14,7 +14,10 @@ Focus on providing clear, actionable solutions and follow best practices.
 Always update the file ./ASTROPATH.md with your feedback, but don't overwrite it from scratch.
 What you are going to do is to edit a specific section of the file. It is Markdown, so identify sections
 as blocks that start with a '#', and then add your text inside that section, the specific section title you need to
-update will be provided to you in the task description in the following paragraphs.` + "\n"
+update will be provided to you in the task description in the following paragraphs.
+
+Also, remember to always read the first section of the ./ASTROPATH.md file , called 'Exploration Report',
+	this will give you an explanation about the project useful as initial context.` + "\n"
 
 const defaultPrompt = basePrompt
 
@@ -48,6 +51,25 @@ const analystPrompt = basePrompt + "\n" + `For your next task you are going to b
 	Don't forget to add your findings to the ./ASTROPATH.md file, your section is called 'Solution Proposal'.`
 
 
+const developerPrompt = basePrompt + "\n" + `For your next task you are going to be a software developer AI assistant.
+	You are going to review the ./ASTROPATH.md file, which contains:
+	- An issue explained in the 'Issue Explanation' section
+	- A proposed solution in the 'Solution Proposal' section
+
+	If any of these sections is empty, just report it and exit. Don't try to code anything that is not clearly
+	detailed in the ./ASTROPATH.md file.
+
+	As a developer assistant your task is to implement the solution proposed in the 'Solution Proposal' section.
+	For that you will:
+	1. Checkout to a new git branch. Never update main directly.
+	2. Implement the solution.
+	4. Commit your changes.
+	3. Update the ./ASTROPATH.md file with a summary of what you did as a bullet points list. Use the 'Implemented Code' section for that.
+
+	Do not try to push the branch to the remote repository, just commit it locally as it will need more reviews before pushing it.
+	Remember to update the ./ASTROPATH.md file within the 'Implemented code' section.
+`
+
 type PromptParams struct {
 }
 
@@ -64,6 +86,7 @@ const (
 	ExplorerPrompt PromptType = "explorer"
 	ReviewerPrompt PromptType = "reviewer"
 	AnalystPrompt PromptType = "analyst"
+	DeveloperPrompt PromptType = "developer"
 )
 
 // getPrompt returns the appropriate prompt based on the prompt type
@@ -71,6 +94,8 @@ func GetPrompt(promptType PromptType) string {
 	switch promptType {
 	case AnalystPrompt:
 		return analystPrompt
+	case DeveloperPrompt:
+		return developerPrompt
 	case ExplorerPrompt:
 		return explorerPrompt
 	case ReviewerPrompt:
