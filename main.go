@@ -21,6 +21,8 @@ func main() {
 		showHelp()
 	case "echo":
 		handleEcho(os.Args[2:])
+	case "init":
+		handleInit()
 	case "analyze":
 		handleClaudeAnalyze()
 	case "develop":
@@ -45,6 +47,7 @@ func showHelp() {
 	fmt.Println("COMMANDS:")
 	fmt.Println("    help     Show this help message")
 	fmt.Println("    echo     Echo the provided arguments")
+	fmt.Println("    init     Initialize Astropath and Claude settings in the current directory.")
 	fmt.Println("    analyze  Launch a Claude agent that will analyze an issue and propse a solution.")
 	fmt.Println("    develop  Launch a Claude agent that will write code as a developer.")
 	fmt.Println("    explore  Launch a Claude agent that will explore the current dir to find what the project is about and provide basic details.")
@@ -68,6 +71,67 @@ func handleEcho(args []string) {
 	fmt.Println()
 }
 
+func handleInit() {
+	// Create ASTROPATH.md file
+	astropathContent :=
+`# Exploration Report
+
+# Issue Explanation
+
+# Solution Proposal
+
+# Implemented Code
+
+# Solution Review
+`
+
+	err := os.WriteFile("ASTROPATH.md", []byte(astropathContent), 0644)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error creating ASTROPATH.md: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("Created ASTROPATH.md file in the current directory.\n")
+
+	// Create .claude directory if it does not exist
+	if _, err := os.Stat(".claude"); os.IsNotExist(err) {
+		err := os.Mkdir(".claude", 0755)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error creating .claude directory: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Printf("Created .claude directory in the current directory.\n")
+	} else {
+		fmt.Printf(".claude directory already exists, skipping.\n")
+	}
+
+	// Create .claude/settings.json file if it does not exist
+	settingsPath := ".claude/settings.json"
+	if _, err := os.Stat(settingsPath); os.IsNotExist(err) {
+		claudeBaseJson := `{
+  "permissions": {
+  "allow": [
+    "Edit",
+    "Bash(./astropath echo:*)",
+    "Bash(git commit:*)",
+    "Bash(git checkout:*)"
+  ],
+  "deny": []
+  }
+}`
+
+		err := os.WriteFile(settingsPath, []byte(claudeBaseJson), 0644)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error creating .claude/settings.json: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Printf("Created .claude/settings.json with default Astropath permissions.\n")
+	} else {
+		fmt.Printf(".claude/settings.json already exists, skipping.\n")
+	}
+
+	fmt.Println("Initialization complete!")
+}
+
 func handleClaudeAnalyze() {
 	cmd.ClaudeAnalyze()
 }
@@ -83,7 +147,7 @@ func handleClaudeExplore() {
 func handleClaudeReview(args []string) {
 	if len(args) == 0 {
 		cmd.ClaudeReview("main") // Default to main branch if no branch is specified
+	} else {
+		cmd.ClaudeReview(args[0])
 	}
-
-	cmd.ClaudeReview(args[0])
 }

@@ -12,11 +12,6 @@ CLI to orchestrate the execution of local AI agents
 
 # To-Fix list
 
-- Implement an 'astropath init' command that:
-  - Automatically creates ASTROPATH.md file if not exists
-  - Creates .claude directory if it doesn't exists
-  - Populates the .claude/settings.json with 'Edit' and 'Git' perms
-
 - Improve templates management
   - Move them to files for easier management and such
   - More 'dynamic' content in templates, like branches naming
