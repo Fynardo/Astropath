@@ -20,8 +20,6 @@ func main() {
 	switch command {
 	case "help", "--help", "-h":
 		showHelp()
-	case "echo":
-		handleEcho(os.Args[2:])
 	case "init":
 		handleInit()
 	case "analyze":
@@ -47,7 +45,6 @@ func showHelp() {
 	fmt.Println()
 	fmt.Println("COMMANDS:")
 	fmt.Println("    help     Show this help message")
-	fmt.Println("    echo     Echo the provided arguments")
 	fmt.Println("    init     Initialize Astropath and Claude settings in the current directory.")
 	fmt.Println("    analyze  Launch a Claude agent that will analyze an issue and propse a solution.")
 	fmt.Println("    develop  Launch a Claude agent that will write code as a developer.")
@@ -55,21 +52,6 @@ func showHelp() {
 	fmt.Println("    review   Launch a Claude agent that will review a branch.")
 	fmt.Println()
 	fmt.Println("Use 'astropath <COMMAND> --help' for more information about a specific command.")
-}
-
-func handleEcho(args []string) {
-	if len(args) == 0 {
-		fmt.Println("Usage: astropath echo <message>")
-		return
-	}
-
-	for i, arg := range args {
-		if i > 0 {
-			fmt.Print(" ")
-		}
-		fmt.Print(arg)
-	}
-	fmt.Println()
 }
 
 func handleInit() {
