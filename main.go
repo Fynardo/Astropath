@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"os"
 
 	"github.com/fynardo/astropath/cmd"
@@ -30,6 +31,8 @@ func main() {
 		handleClaudeExplore()
 	case "review":
 		handleClaudeReview(os.Args[2:])
+	case "raw":
+		handleClaudeRaw(os.Args[2:])
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command: %s\n", command)
 		fmt.Fprintf(os.Stderr, "Run 'astropath help' for usage information.\n")
@@ -50,6 +53,7 @@ func showHelp() {
 	fmt.Println("    develop  Launch a Claude agent that will write code as a developer.")
 	fmt.Println("    explore  Launch a Claude agent that will explore the current dir to find what the project is about and provide basic details.")
 	fmt.Println("    review   Launch a Claude agent that will review a branch.")
+	fmt.Println("    raw      Launch a Claude agent with a custom prompt as argument (UNSAFE).")
 	fmt.Println()
 	fmt.Println("Use 'astropath <COMMAND> --help' for more information about a specific command.")
 }
@@ -109,4 +113,13 @@ func handleClaudeReview(args []string) {
 	} else {
 		cmd.ClaudeReview(args[0])
 	}
+}
+
+func handleClaudeRaw(args []string) {
+	if len(args) == 0 {
+		fmt.Fprintf(os.Stderr, "No prompt provided for raw Claude agent.\n")
+		os.Exit(1)
+	}
+	prompt := strings.Join(args, " ") // The idea is that it works either the prompt is quoted or not
+	cmd.ClaudeRaw(prompt)
 }
