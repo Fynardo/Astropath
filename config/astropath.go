@@ -10,5 +10,5 @@ const AstropathBaseTemplate =
 
 # Implemented Code
 
-# Solution Review
+# Code Review
 `
