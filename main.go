@@ -7,55 +7,88 @@ import (
 
 	"github.com/fynardo/astropath/cmd"
 	"github.com/fynardo/astropath/config"
+	"github.com/spf13/cobra"
 )
 
-
-func main() {
-	if len(os.Args) < 2 {
-		showHelp()
-		return
-	}
-
-	command := os.Args[1]
-
-	switch command {
-	case "help", "--help", "-h":
-		showHelp()
-	case "init":
-		handleInit()
-	case "analyze":
-		handleClaudeAnalyze()
-	case "develop":
-		handleClaudeDevelop()
-	case "explore":
-		handleClaudeExplore()
-	case "review":
-		handleClaudeReview(os.Args[2:])
-	case "raw":
-		handleClaudeRaw(os.Args[2:])
-	default:
-		fmt.Fprintf(os.Stderr, "Unknown command: %s\n", command)
-		fmt.Fprintf(os.Stderr, "Run 'astropath help' for usage information.\n")
-		os.Exit(1)
-	}
+var rootCmd = &cobra.Command{
+	Use:   "astropath",
+	Short: "CLI to orchestrate the execution of local AI agents",
+	Long:  "Astropath - CLI to orchestrate the execution of local AI agents",
+	CompletionOptions: cobra.CompletionOptions{
+		DisableDefaultCmd: true,
+	},
 }
 
-func showHelp() {
-	fmt.Println("Astropath - CLI to orchestrate the execution of local AI agents")
-	fmt.Println()
-	fmt.Println("USAGE:")
-	fmt.Println("    astropath <COMMAND>")
-	fmt.Println()
-	fmt.Println("COMMANDS:")
-	fmt.Println("    help     Show this help message")
-	fmt.Println("    init     Initialize Astropath and Claude settings in the current directory.")
-	fmt.Println("    analyze  Launch a Claude agent that will analyze an issue and propse a solution.")
-	fmt.Println("    develop  Launch a Claude agent that will write code as a developer.")
-	fmt.Println("    explore  Launch a Claude agent that will explore the current dir to find what the project is about and provide basic details.")
-	fmt.Println("    review   Launch a Claude agent that will review a branch.")
-	fmt.Println("    raw      Launch a Claude agent with a custom prompt as argument (UNSAFE).")
-	fmt.Println()
-	fmt.Println("Use 'astropath <COMMAND> --help' for more information about a specific command.")
+var initCmd = &cobra.Command{
+	Use:   "init",
+	Short: "Initialize Astropath and Claude settings in the current directory",
+	Long:  "Initialize Astropath and Claude settings in the current directory.",
+	Run: func(cmd *cobra.Command, args []string) {
+		handleInit()
+	},
+}
+
+var analyzeCmd = &cobra.Command{
+	Use:   "analyze",
+	Short: "Launch a Claude agent that will analyze an issue and propose a solution",
+	Long:  "Launch a Claude agent that will analyze an issue and propose a solution.",
+	Run: func(cmd *cobra.Command, args []string) {
+		handleClaudeAnalyze()
+	},
+}
+
+var developCmd = &cobra.Command{
+	Use:   "develop",
+	Short: "Launch a Claude agent that will write code as a developer",
+	Long:  "Launch a Claude agent that will write code as a developer.",
+	Run: func(cmd *cobra.Command, args []string) {
+		handleClaudeDevelop()
+	},
+}
+
+var exploreCmd = &cobra.Command{
+	Use:   "explore",
+	Short: "Launch a Claude agent that will explore the current dir to find what the project is about and provide basic details",
+	Long:  "Launch a Claude agent that will explore the current dir to find what the project is about and provide basic details.",
+	Run: func(cmd *cobra.Command, args []string) {
+		handleClaudeExplore()
+	},
+}
+
+var reviewCmd = &cobra.Command{
+	Use:   "review [branch]",
+	Short: "Launch a Claude agent that will review a branch",
+	Long:  "Launch a Claude agent that will review a branch. Defaults to 'main' if no branch is specified.",
+	Args:  cobra.MaximumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		handleClaudeReview(args)
+	},
+}
+
+var rawCmd = &cobra.Command{
+	Use:   "raw <prompt>",
+	Short: "Launch a Claude agent with a custom prompt as argument (UNSAFE)",
+	Long:  "Launch a Claude agent with a custom prompt as argument (UNSAFE).",
+	Args:  cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		handleClaudeRaw(args)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(analyzeCmd)
+	rootCmd.AddCommand(developCmd)
+	rootCmd.AddCommand(exploreCmd)
+	rootCmd.AddCommand(reviewCmd)
+	rootCmd.AddCommand(rawCmd)
+}
+
+func main() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		os.Exit(1)
+	}
 }
 
 func handleInit() {
