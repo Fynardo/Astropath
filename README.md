@@ -13,7 +13,6 @@ CLI to orchestrate the execution of local AI agents
 # To-Fix list
 
 - Improve templates management
-  - Move them to files for easier management and such
   - More 'dynamic' content in templates, like branches naming
 
 - Improve the prompts so Claude:
@@ -22,6 +21,7 @@ CLI to orchestrate the execution of local AI agents
   - More clear directions of how to do things
 
 - Add some sort of logging to Claude usage (tokens, costs, queries, whatever)
+- Improve user feedback while Claude is doing stuff. add support for stream output and redirect it to stdout and/or logs.
 
 - **Idea**: different ASTROPATH.md files to track different tasks / executions (or attach them to the branches somehow to implement some tracing)
 
