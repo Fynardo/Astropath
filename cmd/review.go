@@ -8,12 +8,13 @@ import (
   "time"
 
   "github.com/fynardo/astropath/internal/claude"
+  "github.com/fynardo/astropath/config"
 )
 
 func ClaudeReview(branch string) {
   fmt.Println("Launching Astropath's Claude reviewer agent...")
 
-	prompt := claude.GetPrompt(claude.ReviewerPrompt)
+	prompt := config.GetPrompt(config.ReviewerPromptType)
 	promptParams := claude.ReviewerParams{BranchName: branch}
 
 	templ, err := template.New("prompt").Parse(prompt)

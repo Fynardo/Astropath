@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/fynardo/astropath/cmd"
+	"github.com/fynardo/astropath/config"
 )
 
 
@@ -73,19 +74,7 @@ func handleEcho(args []string) {
 
 func handleInit() {
 	// Create ASTROPATH.md file
-	astropathContent :=
-`# Exploration Report
-
-# Issue Explanation
-
-# Solution Proposal
-
-# Implemented Code
-
-# Solution Review
-`
-
-	err := os.WriteFile("ASTROPATH.md", []byte(astropathContent), 0644)
+	err := os.WriteFile("ASTROPATH.md", []byte(config.AstropathBaseTemplate), 0644)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error creating ASTROPATH.md: %v\n", err)
 		os.Exit(1)
@@ -107,19 +96,7 @@ func handleInit() {
 	// Create .claude/settings.json file if it does not exist
 	settingsPath := ".claude/settings.json"
 	if _, err := os.Stat(settingsPath); os.IsNotExist(err) {
-		claudeBaseJson := `{
-  "permissions": {
-  "allow": [
-    "Edit",
-    "Bash(./astropath echo:*)",
-    "Bash(git commit:*)",
-    "Bash(git checkout:*)"
-  ],
-  "deny": []
-  }
-}`
-
-		err := os.WriteFile(settingsPath, []byte(claudeBaseJson), 0644)
+		err := os.WriteFile(settingsPath, []byte(config.ClaudeSettingsJson), 0644)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error creating .claude/settings.json: %v\n", err)
 			os.Exit(1)

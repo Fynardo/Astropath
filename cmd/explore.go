@@ -6,11 +6,12 @@ import (
 	"time"
 
 	"github.com/fynardo/astropath/internal/claude"
+  "github.com/fynardo/astropath/config"
 )
 
 func ClaudeExplore() {
 	fmt.Println("Launching Claude explorer agent...")
-	prompt := claude.GetPrompt(claude.ExplorerPrompt)
+	prompt := config.GetPrompt(config.ExplorerPromptType)
 	done := claude.RunAgent(prompt)
 	
 	// Give the goroutine a moment to start before returning
