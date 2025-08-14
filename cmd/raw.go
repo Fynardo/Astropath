@@ -10,7 +10,7 @@ import (
 
 func ClaudeRaw(prompt string) {
 	fmt.Println("Launching Claude Raw agent...")
-	done := claude.RunAgent(prompt)
+	done := claude.RunAgentWithStreaming(prompt)
 
 	// Give the goroutine a moment to start before returning
 	time.Sleep(100 * time.Millisecond)
