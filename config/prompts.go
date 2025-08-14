@@ -96,8 +96,9 @@ const DeveloperPrompt = basePrompt + "\n" + `For your next task you are going to
 	1. Checkout to a new git branch ( {{ .BranchName }} ). Never update main directly.
 	2. Implement the solution as stated in the 'Solution Proposal'
 	3. Generate a summary bullet points list containing the most relevant changes.
-	4. Commit your changes, use the summary as a commit message.
+	4. Commit your changes and the new files that you created (if any). The commit message will be the summary and a the following line "Generated with Claude Code / Astropath" to grant recognition to the AI framework.
 	5. Update the ./ASTROPATH.md file with the summary bullet points list in the 'Implemented Code' section.
+	6. Update the ./ASTROPATH.md file with a list of the files you modified or created.
 
 	Do not try to push the branch to the remote repository, just commit it locally as it will need more reviews before pushing it.
 	Remember to update the ./ASTROPATH.md file within the 'Implemented code' section.
