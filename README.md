@@ -9,7 +9,6 @@
 - **Developer**: Implements features, fixes bugs, and writes code 
 - **Explorer**: Navigates and documents codebase structure and functionality
 - **Reviewer**: Performs code reviews and suggests improvements
-- **Tester**: Creates and runs tests for validation
 
 **Human-in-the-Loop Workflow**: Agents coordinate through `ASTROPATH.md` files that maintain context between execution steps, allowing you to guide and review the process at each stage.
 
@@ -30,31 +29,32 @@ astropath init
 ### Explore Your Codebase
 ```bash
 # Have the Explorer agent analyze and document your project structure
-astropath explore "Please analyze the project structure and main components"
+astropath explore
 ```
 
 ### Analyze Specific Code
 ```bash
-# Use the Analyst to examine code patterns and potential issues
-astropath analyze "Review the authentication module for security best practices"
+# Use the Analyst to read the issue detailed in ASTROPATH.md and generate a solution proposal
+astropath analyze
 ```
 
 ### Implement New Features
 ```bash
 # Let the Developer agent implement functionality based on requirements
-astropath develop "Add user registration endpoint with validation"
+astropath develop
 ```
 
 ### Code Review Process
 ```bash
 # Get comprehensive code review feedback
-astropath review "Please review the changes in the current branch"
+astropath review
 ```
 
 ### Multi-Step Workflow
 ```bash
-# Use pipeline for coordinated multi-agent execution
-astropath pipeline "Analyze, develop user authentication, then review the implementation"
+# Use pipeline for coordinated multi-agent execution. 
+# Pipeline will run analyst -> developer -> reviewer agents with waits after each step providing a way for human-in-the-loop refinement of requirements.
+astropath pipeline 
 ```
 
 ### Raw Claude Interaction
@@ -66,6 +66,8 @@ astropath raw "Help me debug this specific function"
 Each command creates or updates the `ASTROPATH.md` file with context, allowing you to review progress and provide guidance between steps.
 
 # To-Fix list
+
+- Add a 'tester' AI agent role 
 
 - Improve the prompts so Claude:
   - Thinks less in useless stuff
