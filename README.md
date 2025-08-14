@@ -19,12 +19,18 @@ CLI to orchestrate the execution of local AI agents
   - Thinks less in useless stuff
   - Writes less words but more important ones
 
+- Improve role branches management
+  - If branch is specified -> tell the agent to use that
+  - If no branch is specified but current branch is not main -> use that one
+  - If no branch is specified and current branch is main -> Checkout to a new one
+
 - Add some sort of logging to Claude usage (tokens, costs, queries, whatever)
 - Improve user feedback while Claude is doing stuff. add support for stream output and redirect it to stdout and/or logs.
 - Add a 'refresh' command or similar that clears the ASTROPATH.md file (probably keeping the exploration section)
 
 - Improve golang stuff
   - Reorganize cmd and Cobra handlers
+    - Add a param to switch between RunAgent and RunAgentWithStream
   - I wanted to use channels for communication but agents execution is going to be sync'ed so may not needed
 
 - **Idea**: different ASTROPATH.md files to track different tasks / executions (or attach them to the branches somehow to implement some tracing)
