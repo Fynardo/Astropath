@@ -35,9 +35,6 @@ func streamReader(reader io.Reader, done chan<- error) {
 			if msgType, ok := jsonData["type"].(string); ok && msgType == "user" {
 				fmt.Println(jsonData["message"])
 			}
-			if content, ok := jsonData["content"].(string); ok && content != "" {
-				// fmt.Print(content)
-			}
 		} else {
 			// If not JSON, just print the line as-is
 			fmt.Println(line)
