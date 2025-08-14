@@ -26,7 +26,7 @@ func ClaudeReview(branch string) {
 		panic(err)
 	}
 
-	done := claude.RunAgent(buff.String())
+	done := claude.RunAgentWithStreaming(buff.String())
 	
 	// Give the goroutine a moment to start before returning
 	time.Sleep(100 * time.Millisecond)

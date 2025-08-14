@@ -146,10 +146,10 @@ func handleClaudeAnalyze() {
 
 func handleClaudeDevelop(args []string) {
 	if len(args) == 0 {
-		cmd.ClaudeDevelop(args[0])
-	} else {
 		// If no branch is specified, the agent will find a name for it
 		cmd.ClaudeDevelop("")
+	} else {
+		cmd.ClaudeDevelop(args[0])
 	}
 }
 

@@ -21,6 +21,7 @@ CLI to orchestrate the execution of local AI agents
 
 - Add some sort of logging to Claude usage (tokens, costs, queries, whatever)
 - Improve user feedback while Claude is doing stuff. add support for stream output and redirect it to stdout and/or logs.
+- Add a 'refresh' command or similar that clears the ASTROPATH.md file (probably keeping the exploration section)
 
 - Improve golang stuff
   - Reorganize cmd and Cobra handlers

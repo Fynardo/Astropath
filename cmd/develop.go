@@ -31,11 +31,11 @@ func ClaudeDevelop(branch string) {
 		panic(err)
 	}
 
-	done := claude.RunAgent(buff.String())
+	done := claude.RunAgentWithStreaming(buff.String())
 
 	// Give the goroutine a moment to start before returning
 	time.Sleep(100 * time.Millisecond)
-	fmt.Println("Astropath's Claude Developer agent launched. Use Ctrl+C to stop.")
+	fmt.Println("Astropath's Claude Developer agent launched with streaming. Use Ctrl+C to stop.")
 	
 	// Wait for the agent to complete
 	select {

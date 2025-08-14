@@ -13,11 +13,11 @@ func ClaudeAnalyze() {
   fmt.Println("Launching Astropath's Claude Analyst agent...")
 
 	prompt := config.GetPrompt(config.AnalystPromptType)
-	done := claude.RunAgent(prompt)
+	done := claude.RunAgentWithStreaming(prompt)
 
 	// Give the goroutine a moment to start before returning
 	time.Sleep(100 * time.Millisecond)
-	fmt.Println("Astropath's Claude Analyst agent launched. Use Ctrl+C to stop.")
+	fmt.Println("Astropath's Claude Analyst agent launched with streaming. Use Ctrl+C to stop.")
 	
 	// Wait for the agent to complete
 	select {
