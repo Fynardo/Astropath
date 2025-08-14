@@ -39,18 +39,11 @@ func ClaudeDevelop(branch string) {
 	
 	// Wait for the agent to complete
 	select {
-	case result := <-done:
-		if result.Error != nil {
-			fmt.Fprintf(os.Stderr, "Astropath's Claude Developer agent exited with error: %v\n", result.Error)
+	case err := <-done:
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Astropath's Claude Developer agent exited with error: %v\n", err)
 			os.Exit(1)
 		}
 		fmt.Println("Claude agent completed successfully.")
-		
-		// Optional: Access to buffer for future processing
-		buffer := result.Buffer.GetBuffer()
-		fmt.Printf("Captured %d bytes of streaming output.\n", len(buffer))
-		
-		jsonLines := result.Buffer.GetJSONLines()
-		fmt.Printf("Parsed %d JSON lines from stream.\n", len(jsonLines))
 	}
 }
