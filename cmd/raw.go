@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"strings"
 	"time"
 
@@ -64,12 +63,3 @@ func claudeRaw(cmd *cobra.Command, prompt string) error {
 		return nil
 	}
 }
-
-// Legacy function for backward compatibility
-func ClaudeRaw(prompt string) {
-	if err := claudeRaw(nil, prompt); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		os.Exit(1)
-	}
-}
-

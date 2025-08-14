@@ -3,7 +3,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -63,12 +62,4 @@ func claudePipeline(cmd *cobra.Command, branch string) error {
 
 	fmt.Println("Pipeline completed successfully!")
 	return nil
-}
-
-// Legacy function for backward compatibility
-func ClaudePipeline(branch string) {
-	if err := claudePipeline(nil, branch); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		os.Exit(1)
-	}
 }

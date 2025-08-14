@@ -3,7 +3,6 @@ package cmd
 import (
 	"bytes"
 	"fmt"
-	"os"
 	"text/template"
 	"time"
 
@@ -18,7 +17,7 @@ type DeveloperParams struct {
 
 // developCmd represents the develop command
 var developCmd = &cobra.Command{
-	Use:   "develop [branch-name]",
+	Use:   "develop [branch]",
 	Short: "Launch a Claude agent that will write code as a developer",
 	Long: `Launch a Claude agent that will write code as a developer.
 
@@ -80,13 +79,5 @@ func claudeDevelop(cmd *cobra.Command, branch string) error {
 		}
 		fmt.Println("Claude agent completed successfully.")
 		return nil
-	}
-}
-
-// Legacy function for backward compatibility
-func ClaudeDevelop(branch string) {
-	if err := claudeDevelop(nil, branch); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		os.Exit(1)
 	}
 }

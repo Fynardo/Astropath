@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/fynardo/astropath/internal/claude"
@@ -50,13 +49,5 @@ func claudeExplore(cmd *cobra.Command) error {
 		}
 		fmt.Println("Claude agent completed successfully.")
 		return nil
-	}
-}
-
-// Legacy function for backward compatibility
-func ClaudeExplore() {
-	if err := claudeExplore(nil); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		os.Exit(1)
 	}
 }

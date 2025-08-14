@@ -3,7 +3,6 @@ package cmd
 import (
 	"bytes"
 	"fmt"
-	"os"
 	"text/template"
 	"time"
 
@@ -77,13 +76,5 @@ func claudeReview(cmd *cobra.Command, branch string) error {
 		}
 		fmt.Println("Claude agent completed successfully.")
 		return nil
-	}
-}
-
-// Legacy function for backward compatibility
-func ClaudeReview(branch string) {
-	if err := claudeReview(nil, branch); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		os.Exit(1)
 	}
 }
