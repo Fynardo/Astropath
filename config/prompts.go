@@ -93,11 +93,11 @@ const DeveloperPrompt = basePrompt + "\n" + `For your next task you are going to
 
 	As a developer assistant your task is to implement the solution proposed in the 'Solution Proposal' section.
 	For that you will:
-	1. Checkout to a new git branch. Never update main directly.
+	1. Checkout to a new git branch ( {{ .BranchName }} ). Never update main directly.
 	2. Implement the solution as stated in the 'Solution Proposal'
 	3. Generate a summary bullet points list containing the most relevant changes.
 	4. Commit your changes, use the summary as a commit message.
-	3. Update the ./ASTROPATH.md file with and add the summary to the 'Implemented Code' section.
+	5. Update the ./ASTROPATH.md file with the summary bullet points list in the 'Implemented Code' section.
 
 	Do not try to push the branch to the remote repository, just commit it locally as it will need more reviews before pushing it.
 	Remember to update the ./ASTROPATH.md file within the 'Implemented code' section.

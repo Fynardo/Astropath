@@ -1,19 +1,37 @@
 package cmd
 
 import (
+  "bytes"
   "fmt"
   "os"
+	"text/template"
   "time"
 
   "github.com/fynardo/astropath/internal/claude"
   "github.com/fynardo/astropath/config"
 )
 
-func ClaudeDevelop() {
+type DeveloperParams struct {
+	BranchName string
+}
+
+
+func ClaudeDevelop(branch string) {
   fmt.Println("Launching Astropath's Claude Developer agent...")
 
 	prompt := config.GetPrompt(config.DeveloperPromptType)
-	done := claude.RunAgent(prompt)
+	promptParams := DeveloperParams{BranchName: branch}
+
+	templ, err := template.New("prompt").Parse(prompt)
+	var buff = bytes.Buffer{}
+
+	err = templ.Execute(&buff, promptParams)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error executing prompt template: %v\n", err)
+		panic(err)
+	}
+
+	done := claude.RunAgent(buff.String())
 
 	// Give the goroutine a moment to start before returning
 	time.Sleep(100 * time.Millisecond)

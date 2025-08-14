@@ -41,8 +41,9 @@ var developCmd = &cobra.Command{
 	Use:   "develop",
 	Short: "Launch a Claude agent that will write code as a developer",
 	Long:  "Launch a Claude agent that will write code as a developer.",
+	Args: cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		handleClaudeDevelop()
+		handleClaudeDevelop(args)
 	},
 }
 
@@ -75,6 +76,16 @@ var rawCmd = &cobra.Command{
 	},
 }
 
+var pipelineCmd = &cobra.Command{
+	Use:   "pipeline",
+	Short: "Launch a Pipeline of Claude agents that will solve a task",
+	Long:  "Launch a Pipeline of Claude agents that will solve a task by analyzing -> developing -> reviewing it",
+	Run: func(cmd *cobra.Command, args []string) {
+		handleClaudePipeline(args)
+	},
+}
+
+
 func init() {
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(analyzeCmd)
@@ -82,6 +93,7 @@ func init() {
 	rootCmd.AddCommand(exploreCmd)
 	rootCmd.AddCommand(reviewCmd)
 	rootCmd.AddCommand(rawCmd)
+	rootCmd.AddCommand(pipelineCmd)
 }
 
 func main() {
@@ -132,8 +144,13 @@ func handleClaudeAnalyze() {
 	cmd.ClaudeAnalyze()
 }
 
-func handleClaudeDevelop() {
-	cmd.ClaudeDevelop()
+func handleClaudeDevelop(args []string) {
+	if len(args) == 0 {
+		cmd.ClaudeDevelop(args[0])
+	} else {
+		// If no branch is specified, the agent will find a name for it
+		cmd.ClaudeDevelop("")
+	}
 }
 
 func handleClaudeExplore() {
@@ -155,4 +172,8 @@ func handleClaudeRaw(args []string) {
 	}
 	prompt := strings.Join(args, " ") // The idea is that it works either the prompt is quoted or not
 	cmd.ClaudeRaw(prompt)
+}
+
+func handleClaudePipeline(args []string) {
+	cmd.ClaudePipeline(args[0])
 }
