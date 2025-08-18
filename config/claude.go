@@ -4,8 +4,8 @@ const ClaudeSettingsJson =
 `{
   "permissions": {
   "allow": [
-    "Edit",
-    "Bash(./astropath echo:*)",
+    "Edit(*)",
+    "Bash(git add:*)",
     "Bash(git commit:*)",
     "Bash(git checkout:*)"
   ],
