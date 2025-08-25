@@ -176,7 +176,7 @@ func extractExplorationReport(content string) string {
 		}
 		
 		// Check if we've hit another section (any line starting with #)
-		if inExplorationSection && strings.HasPrefix(line, "#") && !strings.HasPrefix(line, "# Exploration Report") {
+		if inExplorationSection && strings.HasPrefix(line, "# ") && !strings.HasPrefix(line, "# Exploration Report") {
 			break
 		}
 		
